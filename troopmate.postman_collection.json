@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "505f7248-b80e-4593-83b9-cf434cba1ec4",
+		"name": "troopmate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODAyMjA1LCJleHAiOjE1OTQ4MDI4MDV9.5QaJuoHV3XCnCciUzOyM2vJBF_sv23fjmWbXDKK9efQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_name\" : \"sss\",\n    \"user_email\" : \"demo111@gmail.com\",\n    \"password\" : \"demo@111\",\n    \"user_preferences\" : [\"xyz\",\"\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/registration",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET server",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000",
+							"host": [
+								"localhost"
+							],
+							"port": "5000"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Is User Exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailOrMobile\" : \"sekharasahu@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/isUserExists",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"isUserExists"
+							]
+						},
+						"description": "API for checking wheather the given user id exists or not."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Intrests List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoiZGVtbzExMUBnbWFpbC5jb20iLCJpYXQiOjE1OTQ4MDI2OTgsImV4cCI6MTU5NDgwMzI5OH0.jpk_FOkPCthGNveFzNcZ7SXL38m47JZzH7geFstM1v4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/service/user/intrests",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"intrests"
+							]
+						},
+						"description": "API for getting available intrests list"
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Otp",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailOrMobile\" : \"sekharasahu@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/generateOtp",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"generateOtp"
+							]
+						},
+						"description": "Api for generating OTP"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODAxODIwLCJleHAiOjE1OTQ4MDI0MjB9.gxoGVK-Wqi6d4uwQiLqOjHkA7rWIfR6mb1TD-xfSvWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"otp\" : \"423513\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/verifyOtp",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"verifyOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login_id\" : \"sekharasahu@gmail.com\",\n    \"password\" : \"sekhar@111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"login"
+							]
+						},
+						"description": "Using this API an user and login the system."
+					},
+					"response": []
+				},
+				{
+					"name": "API for Update Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElkIjoiNWYwZWRkM2FlZWNkNTUyM2Q0NDEzODVkIiwidXNlcl9pZCI6IkJaLTg4NTlJVkJPSiIsImlhdCI6MTU5NDgxMDIxNX0.IuxtAAJho3vORCqGm7Se_Llu4p0Jt8vvy63Mog9uOaw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentpw\" : \"sekhar@123\",\n    \"newpw\" : \"sekhu@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/updatePassword",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API for RESET password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoiZGVtbzExMUBnbWFpbC5jb20iLCJpYXQiOjE1OTQ4MDI2OTgsImV4cCI6MTU5NDgwMzI5OH0.jpk_FOkPCthGNveFzNcZ7SXL38m47JZzH7geFstM1v4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newpw\" : \"demo@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/service/user/resetPassword",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"service",
+								"user",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "aws",
+			"item": [
+				{
+					"name": "User Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODA5NTQ1LCJleHAiOjE1OTQ4MTAxNDV9.ysgQslMmJY87u1rwFQyFMnjM0rr7wfbvKVsmJ26gRFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_name\" : \"sekharsuman\",\n    \"user_email\" : \"sekharasahu@gmail.com\",\n    \"password\" : \"sekhar@111\",\n    \"user_preferences\" : [\"xyz\",\"\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/registration",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"registration"
+							]
+						},
+						"description": "API for user onboarding."
+					},
+					"response": []
+				},
+				{
+					"name": "Server",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "13.235.71.100:5000",
+							"host": [
+								"13",
+								"235",
+								"71",
+								"100"
+							],
+							"port": "5000"
+						},
+						"description": "To check wheather the server is up and running."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Intrests List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODEyNjIxLCJleHAiOjE1OTQ4MTMyMjF9.hygpVks_ms7x70O6mdMZCJQItst8B2qZdFlU_oCzfFc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{aws}}/user/intrests",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"intrests"
+							]
+						},
+						"description": "API for getting available intrests list"
+					},
+					"response": []
+				},
+				{
+					"name": "API for RESET password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODEyNDY1LCJleHAiOjE1OTQ4MTMwNjV9.shpHU1CKWZvUs0VHN3czGA7-pnBpZb7fbTXlOMcdGyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newpw\" : \"sekharsuman@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/resetPassword",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API for Update Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudElkIjoiNWYwZWRkM2FlZWNkNTUyM2Q0NDEzODVkIiwidXNlcl9pZCI6IkJaLTg4NTlJVkJPSiIsImlhdCI6MTU5NDgxMjMyOX0.qIZ2rK9Zxse5jL-zGWmRIsUMUF86LDNQTBclJThxJ8s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentpw\" : \"sekhar@111\",\n    \"newpw\" : \"sekhu@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/updatePassword",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login_id\" : \"sekharasahu@gmail.com\",\n    \"password\" : \"sekharsuman@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/login",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "Using this API an user and login the system."
+					},
+					"response": []
+				},
+				{
+					"name": "Is User Exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailOrMobile\" : \"sekharasahu@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/isUserExists",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"isUserExists"
+							]
+						},
+						"description": "API for checking wheather the given user id exists or not."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbE9yTW9iaWxlIjoic2VraGFyYXNhaHVAZ21haWwuY29tIiwiaWF0IjoxNTk0ODEyNDY1LCJleHAiOjE1OTQ4MTMwNjV9.shpHU1CKWZvUs0VHN3czGA7-pnBpZb7fbTXlOMcdGyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"otp\" : \"406300\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/verifyOtp",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"verifyOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Otp",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailOrMobile\" : \"sekharasahu@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{aws}}/user/generateOtp",
+							"host": [
+								"{{aws}}"
+							],
+							"path": [
+								"user",
+								"generateOtp"
+							]
+						},
+						"description": "Api for generating OTP"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
