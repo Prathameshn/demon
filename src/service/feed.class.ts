@@ -13,6 +13,7 @@ export class Feed {
     private commentCount: Number;
     private description: String;
     private title: String;
+    private isDeleted:Boolean;
     private media:Array<object> = [{ fieldname: String,
         originalname: String,
         encoding: String,
@@ -38,6 +39,7 @@ export class Feed {
         this.likeCount =0;
         this.commentCount=0;
         this.media = media;
+        this.isDeleted=false;
     }
   
     static async saveFeed(feed: Feed) {
@@ -66,14 +68,13 @@ export class Feed {
         id:response._id
       };
     }
-  
-    static async getFeedDetails(feedId: string) {
+
+    static async getFeedByQuery(query: Object) {
       const feedColl = await Db.getFeedCollObj();
       const getFeedRes = await feedColl
         .aggregate([{   
-            $match:{
-                _id:ObjectID(feedId)
-            }},
+              $match:query
+            },
             {
                 $lookup: {
                     from: 'users',
@@ -86,14 +87,65 @@ export class Feed {
                 $unwind:'$createdBy'
             },
             {
+              $sort:{createdAt:-1}
+            },
+            {
                 $project:{ _id:1, type: 1 ,createdAt: 1, updatedAt: 1, media:1,
                     createdBy:{
-                        user_id:1
+                      user_name:1,
+                      user_id:1,
+                      user_email:1,
                     } }
             }
         ]).toArray();
-        // .find({ _id: ObjectID(feedId) })
-        // .project({ _id:1, createdBy: 1, type: 1 ,createdAt: 1, updatedAt: 1, media:1 })
       return getFeedRes;
+    }
+  
+    static async getFeedDetails(feedId: string) {
+      const feedColl = await Db.getFeedCollObj();
+      const getFeedRes = await feedColl
+        .find({ _id: ObjectID(feedId) })
+        .project({ _id:1, createdBy: 1, type: 1 ,createdAt: 1, updatedAt: 1, media:1 }).toArray();
+      return getFeedRes;
+    }
+
+    static async incrementLikeCount(feedId: string) {
+      const feedColl = await Db.getFeedCollObj();
+      const getFeedRes = await feedColl
+      .updateOne(
+        { _id:ObjectID(feedId) },
+        { $inc: { likeCount: 1} },
+     )
+     return getFeedRes
+    }
+
+    static async decrementLikeCount(feedId: string) {
+      const feedColl = await Db.getFeedCollObj();
+      const getFeedRes = await feedColl
+      .updateOne(
+        { _id:ObjectID(feedId) },
+        { $inc: { likeCount: -1} },
+     )
+     return getFeedRes
+    }
+
+    static async incrementCommentCount(feedId: string) {
+      const feedColl = await Db.getFeedCollObj();
+      const getFeedRes = await feedColl
+      .updateOne(
+        { _id:ObjectID(feedId) },
+        { $inc: { commentCount: 1} },
+     )
+     return getFeedRes
+    }
+
+    static async decrementCommentCount(feedId: string) {
+      const feedColl = await Db.getFeedCollObj();
+      const getFeedRes = await feedColl
+      .updateOne(
+        { _id:ObjectID(feedId) },
+        { $inc: { commentCount: -1} },
+     )
+     return getFeedRes
     }
   }

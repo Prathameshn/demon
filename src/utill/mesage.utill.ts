@@ -10,7 +10,9 @@ export const message = {
     create:`New post successfully`,
     update:`Post updated successfully`,
     delete:`Post deleted successfully`,
-    get:`Post get successfully`
+    get:`Post get successfully`,
+    like:'Liked',
+    unlike:'Unliked'
   },
   user: {
     user_name_missing : 'Key value user_name can not be empty.',

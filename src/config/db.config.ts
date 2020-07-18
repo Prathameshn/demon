@@ -14,6 +14,9 @@ export class Db {
   private static userCollObj: any = null;
   private static utillCollObj: any = null;
   private static otpCollObj: any = null;
+  private static feedCollObj: any = null;
+  private static feedLikeCollObj: any = null;
+  private static feedCommentCollObj: any = null;
   private static options: object = {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -91,16 +94,46 @@ export class Db {
 
   //Method for getting Feed collection object
   static async getFeedCollObj() {
-    if (this.otpCollObj == null) {
+    if (this.feedCollObj == null) {
       try {
         const conn = await Db.getConnObj();
-        this.otpCollObj = await conn
+        this.feedCollObj = await conn
           .db(process.env.TEST_DB)
-          .collection('feed');
+          .collection('feeds');
       } catch (err) {
         console.log(err);
       }
     }
-    return this.otpCollObj;
+    return this.feedCollObj;
+  }
+
+  //Method for getting Feed Like collection object
+  static async getFeedLikeCollObj() {
+    if (this.feedLikeCollObj == null) {
+      try {
+        const conn = await Db.getConnObj();
+        this.feedLikeCollObj = await conn
+          .db(process.env.TEST_DB)
+          .collection('feedlikes');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return this.feedLikeCollObj;
+  }
+
+  //Method for getting Feed Like collection object
+  static async getFeedCommentCollObj() {
+    if (this.feedCommentCollObj == null) {
+      try {
+        const conn = await Db.getConnObj();
+        this.feedCommentCollObj = await conn
+          .db(process.env.TEST_DB)
+          .collection('feedcomments');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return this.feedCommentCollObj;
   }
 }

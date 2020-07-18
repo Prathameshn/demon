@@ -23,7 +23,6 @@ export const authorization = async (
         const isVarified = await jWT.verifyToken(token);
         if (isVarified.user_id) {
           req.body['user_id'] = isVarified.user_id;
-          req.body.pr = "sdfd"
           next();
         } else if (isVarified.emailOrMobile) {
           req.body['emailOrMobile'] = isVarified.emailOrMobile;
