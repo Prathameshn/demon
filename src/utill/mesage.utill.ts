@@ -12,7 +12,9 @@ export const message = {
     delete:`Post deleted successfully`,
     get:`Post get successfully`,
     like:'Liked',
-    unlike:'Unliked'
+    unlike:'Unliked',
+    saved:'Saved',
+    remove_from_save:'Delete from save'
   },
   user: {
     user_name_missing : 'Key value user_name can not be empty.',

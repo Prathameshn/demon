@@ -1,18 +1,21 @@
 import { Db } from '../config/db.config';
-import { Utill } from '../utill/utill';
-import { message } from '../utill/mesage.utill';
-import { jWT } from '../utill/jwt.utill';
 let ObjectID = require('mongodb').ObjectID
 
 export class Feed {
     private createdBy:String;
     private type:String;
+    private mode:String;
     private createdAt:Date;
     private updatedAt:Date;
     private likeCount: Number;
     private commentCount: Number;
     private description: String;
     private title: String;
+    private productName: String;
+    private productDescription: String;
+    private businessName: String;
+    private contactNumber: String;
+    private address: String;
     private isDeleted:Boolean;
     private media:Array<object> = [{ fieldname: String,
         originalname: String,
@@ -28,10 +31,18 @@ export class Feed {
         title:String,
         createdBy: string,
         type: string,
-        media:Array<object>
+        mode:String,
+        media:Array<object>,
+        productName:String,
+        productDescription:String,
+        businessName:String,
+        contactNumber:String,
+        address:String
     ) {
+
         this.createdBy =createdBy;
         this.type = type;
+        this.mode = mode;
         this.createdAt = new Date();
         this.updatedAt = new Date();
         this.description = description;
@@ -39,6 +50,11 @@ export class Feed {
         this.likeCount =0;
         this.commentCount=0;
         this.media = media;
+        this.productName = productName
+        this.productDescription = productDescription
+        this.businessName = businessName
+        this.contactNumber = contactNumber
+        this.address = address
         this.isDeleted=false;
     }
   
@@ -65,10 +81,15 @@ export class Feed {
         description:response.description,
         title:response.title,
         media:response.media,
+        mode:response.mode,
+        productName:response.productName,
+        productDescription:response.productDescription,
+        businessName:response.businessName,
+        contactNumber:response.contactNumber,
+        address:response.address,
         id:response._id
       };
     }
-
     static async getFeedByQuery(query: Object) {
       const feedColl = await Db.getFeedCollObj();
       const getFeedRes = await feedColl

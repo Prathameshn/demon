@@ -2,6 +2,7 @@ import { router } from '../../server';
 import { FeedController } from '../../controller/feed.controller';
 import { FeedCommentController } from '../../controller/feed.comment.controller';
 import { FeedLikeController } from '../../controller/feed.like.controller'
+import { FeedSaveController } from '../../controller/feed.save.controller'
 import multer from 'multer';
 
 const storage = multer.diskStorage({
@@ -47,7 +48,7 @@ router
 
 router
     .route("/:id")
-    .get(FeedController.getFeedDetails)
+    .get(FeedController.getFeedById)
 
 router
     .route("/:id/getAllComment")
@@ -60,6 +61,11 @@ router
 router
     .route("/:id/likeUnlike")
     .post(FeedController.getFeedDetails,FeedLikeController.createOrUpdateLikeObj,FeedController.incrementLikeCount)
+
+router
+    .route("/:id/saveUnSave")
+    .post(FeedController.getFeedDetails,FeedSaveController.createOrUpdatSaveObj)
+    .get(FeedSaveController.getAllFeedSavesByUserId)
 
 router
     .route("/:id/comment")

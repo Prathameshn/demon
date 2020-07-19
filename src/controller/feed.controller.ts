@@ -3,6 +3,8 @@ import { Feed } from '../service/feed.class';
 import { validationResult, statusCode } from '../utill/utill';
 import { AppResponse } from "../utill/response.utill";
 import { message } from '../utill/mesage.utill';
+import { FeedLikeController } from '../controller/feed.like.controller'
+import { FeedSaveController } from './feed.save.controller';
 let ObjectID = require('mongodb').ObjectID
 
 export class FeedController {
@@ -13,13 +15,21 @@ export class FeedController {
     if (!errors.isEmpty()) {
       return res.status(statusCode.Error).send(await AppResponse.validationErr(errors.array()));
     }
-    const createdBy = req.body.createdBy;
-    const type = req.body.type;
-    const description = req.body.description;
-    const title = req.body.title;
-    const media = req.body.media
+    let {
+      createdBy,
+      type,
+      description,
+      title,
+      media,
+      mode,
+      productName,
+      productDescription,
+      businessName,
+      contactNumber,
+      address
+    } =  req.body
 
-    const feed = new Feed(description,title,createdBy, type,media);
+    const feed = new Feed(description,title,createdBy,type,mode,media,productName,productDescription,businessName,contactNumber,address);
 
     try {
       const newFeed = await Feed.saveFeed(feed);
@@ -46,7 +56,14 @@ export class FeedController {
     const {user_id} = req.body
     try {
       const feedDetails = await Feed.getFeedByQuery({createdBy:user_id,type:'POST'});
-      return res.send(feedDetails);
+      for(let i=0;i>=0;i++){
+        if(feedDetails[i]){
+          feedDetails[i].isLiked = await FeedLikeController.getLikeStatus(user_id,feedDetails[i]._id)
+          feedDetails[i].isSave = await FeedSaveController.getFeedSaveStatus(user_id,feedDetails[i]._id)
+        }else{
+          return res.send(feedDetails);
+        }
+      }
     } catch (error) {
       return res.status(statusCode.Error).send(await AppResponse.sendError(error.message));
     }
@@ -56,7 +73,14 @@ export class FeedController {
     const {user_id} = req.body
     try {
       const feedDetails = await Feed.getFeedByQuery({createdBy:user_id,type:'INNOVATION'});
-      return res.send(feedDetails);
+      for(let i=0;i>=0;i++){
+        if(feedDetails[i]){
+          feedDetails[i].isLiked = await FeedLikeController.getLikeStatus(user_id,feedDetails[i]._id)
+          feedDetails[i].isSave = await FeedSaveController.getFeedSaveStatus(user_id,feedDetails[i]._id)
+        }else{
+          return res.send(feedDetails);
+        }
+      }
     } catch (error) {
       return res.status(statusCode.Error).send(await AppResponse.sendError(error.message));
     }
@@ -66,17 +90,31 @@ export class FeedController {
     const {user_id} = req.body
     try {
       const feedDetails = await Feed.getFeedByQuery({type:'POST'});
-      return res.send(feedDetails);
+      for(let i=0;i>=0;i++){
+        if(feedDetails[i]){
+          feedDetails[i].isLiked = await FeedLikeController.getLikeStatus(user_id,feedDetails[i]._id)
+          feedDetails[i].isSave = await FeedSaveController.getFeedSaveStatus(user_id,feedDetails[i]._id)
+        }else{
+          return res.send(feedDetails);
+        }
+      }
     } catch (error) {
       return res.status(statusCode.Error).send(await AppResponse.sendError(error.message));
     }
   }
 
   static async getAllInnovation(req: Request, res: Response) {
-    const {user_id} = req.body
+    const { user_id } = req.body
     try {
-      const feedDetails = await Feed.getFeedByQuery({type:'INNOVATION'});
-      return res.send(feedDetails);
+      let feedDetails = await Feed.getFeedByQuery({type:'INNOVATION'});
+      for(let i=0;i>=0;i++){
+        if(feedDetails[i]){
+          feedDetails[i].isLiked = await FeedLikeController.getLikeStatus(user_id,feedDetails[i]._id)
+          feedDetails[i].isSave = await FeedSaveController.getFeedSaveStatus(user_id,feedDetails[i]._id)
+        }else{
+          return res.send(feedDetails);
+        }
+      }
     } catch (error) {
       return res.status(statusCode.Error).send(await AppResponse.sendError(error.message));
     }
@@ -87,7 +125,25 @@ export class FeedController {
     try {
       const feedDetails = await Feed.getFeedDetails(id);
       if(feedDetails.length==1){
+          req.body.feedDetails = feedDetails[0]
           next()
+      }else{
+        return res.status(statusCode.Error).send(await AppResponse.sendError("Feed not found"));
+      }
+    } catch (error) {
+      return res.status(statusCode.Error).send(await AppResponse.sendError(error.message));
+    }
+  }
+
+  static async getFeedById(req: Request, res: Response,next:NextFunction) {
+    const {id} = req.params
+    const { user_id } = req.body
+    try {
+      const feedDetails = await Feed.getFeedDetails(id);
+      if(feedDetails.length==1){
+        feedDetails[0].isLiked = await FeedLikeController.getLikeStatus(user_id,id)
+        feedDetails[0].isSave = await FeedSaveController.getFeedSaveStatus(user_id,id)
+        return res.send(feedDetails[0]);
       }else{
         return res.status(statusCode.Error).send(await AppResponse.sendError("Feed not found"));
       }

@@ -56,4 +56,17 @@ export class FeedLikeController {
         }
     }
 
+    static async getLikeStatus(user_id:string,id:string) {
+        try {
+            let likeObj =await FeedLike.getFeedLikesByQuery({user:user_id,feed:ObjectID(id),status:true})
+            if(likeObj.length==1){
+                return true
+            }else{
+                return false
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
 }

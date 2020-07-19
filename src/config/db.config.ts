@@ -17,6 +17,9 @@ export class Db {
   private static feedCollObj: any = null;
   private static feedLikeCollObj: any = null;
   private static feedCommentCollObj: any = null;
+  private static feedSaveCollObj: any = null;
+  private static connectionRequestCollObj: any = null;
+  private static communityCollObj: any =null;
   private static options: object = {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -135,5 +138,50 @@ export class Db {
       }
     }
     return this.feedCommentCollObj;
+  }
+
+  //Method for getting Feed Like collection object
+  static async getFeedSaveCollObj() {
+    if (this.feedSaveCollObj == null) {
+      try {
+        const conn = await Db.getConnObj();
+        this.feedSaveCollObj = await conn
+          .db(process.env.TEST_DB)
+          .collection('feedsaves');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return this.feedSaveCollObj;
+  }
+  
+  //Method for getting connection request collection object
+  static async getConditionRequestCollObj() {
+    if (this.connectionRequestCollObj == null) {
+      try {
+        const conn = await Db.getConnObj();
+        this.connectionRequestCollObj = await conn
+          .db(process.env.TEST_DB)
+          .collection('connectionrequests');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return this.connectionRequestCollObj;
+  }
+
+  //Method for getting community collection object
+  static async getCommunityCollObj() {
+    if (this.communityCollObj == null) {
+      try {
+        const conn = await Db.getConnObj();
+        this.communityCollObj = await conn
+          .db(process.env.TEST_DB)
+          .collection('community');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return this.communityCollObj;
   }
 }
